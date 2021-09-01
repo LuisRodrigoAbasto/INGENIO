@@ -23,7 +23,7 @@ namespace Abasto.Negocio
         [StringLength(200), Column(TypeName = "varchar")]
         public string empDireccion { get; set; }
         
-        [StringLength(30), Column(TypeName = "varchar")]
+        [StringLength(20), Column(TypeName = "varchar")]
         public string empTelefono { get; set; }
 
         [Required, StringLength(1), Column(TypeName = "char")]
