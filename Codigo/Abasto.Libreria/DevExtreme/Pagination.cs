@@ -1,23 +1,24 @@
-﻿using EntityFramework.DynamicLinq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
+using System.Data.Entity;
+using System.Linq.Dynamic.Core;
+using EntityFramework.DynamicLinq;
 
 namespace Abasto.Libreria.DevExtreme
 {
     public static partial class Pagination
     {
-        public static async Task<object> PaginateAsync<T>(this IQueryable<T> source, string filtro) where T : class
+        public static async Task<object> PaginateAsync<T>(this IQueryable<T> source, string filter) where T : class
         {
-            return await source.PaginateAsync(filtro, true);
+            return await source.PaginateAsync(filter, true);
         }
-        public static object Paginate<T>(this IQueryable<T> source, string filtro) where T : class
+        public static object Paginate<T>(this IQueryable<T> source, string filter) where T : class
         {
-            return source.PaginateAsync(filtro, false).GetAwaiter().GetResult();
+            return source.PaginateAsync(filter, false).GetAwaiter().GetResult();
         }
         private static async Task<object> PaginateAsync<T>(this IQueryable<T> source, string filtro, bool async) where T : class
         {
@@ -64,9 +65,9 @@ namespace Abasto.Libreria.DevExtreme
                     {
                         if (item.summaryType == "sum") total = async ? await query.Select(item.selector).SumAsync() : query.Select(item.selector).Sum();
                         else if (item.summaryType == "avg") total = query.Aggregate("Average", item.selector);
-                        else if (item.summaryType == "count") total = async ? await query.Select(item.selector).Distinct().CountAsync() : query.Select(item.selector).Distinct().Count();
-                        else if (item.summaryType == "max") total = async ? await query.Select($"new ({item.selector})").OrderBy($"{item.selector} desc").FirstOrDefaultAsync() : query.Select($"new ({item.selector})").OrderBy($"{item.selector} desc").FirstOrDefault();
-                        else if (item.summaryType == "min") total = async ? await query.Select($"new ({item.selector})").OrderBy($"{item.selector} asc").FirstOrDefaultAsync() : query.Select($"new ({item.selector})").OrderBy($"{item.selector} asc").FirstOrDefault();
+                        else if (item.summaryType == "count") total = async ? await query.Select(item.selector).CountAsync() : query.Select(item.selector).Count();
+                        else if (item.summaryType == "max") total = async ? await query.Select(item.selector).OrderBy($"{item.selector} desc").FirstOrDefaultAsync() : query.Select(item.selector).OrderBy($"{item.selector} desc").FirstOrDefault();
+                        else if (item.summaryType == "min") total = async ? await query.Select(item.selector).OrderBy($"{item.selector} asc").FirstOrDefaultAsync() : query.Select(item.selector).OrderBy($"{item.selector} asc").FirstOrDefault();
                     }
                     catch { total = 0; }
                 }
@@ -109,15 +110,16 @@ namespace Abasto.Libreria.DevExtreme
                         {
                             if (!string.IsNullOrEmpty(grup.selector) && !string.IsNullOrEmpty(grup.summaryType))
                             {
-                                if (grup.summaryType == "count") summary.Add($"it.Select( new(it.{grup.selector})).Count()");
-                                else if (grup.summaryType == "sum") summary.Add($"it.Select( new(it.{grup.selector})).Sum()");
-                                else if (grup.summaryType == "avg") summary.Add($"it.Select( new(it.{grup.selector})).Average()");
+                                if (grup.summaryType == "count") summary.Add($"it.Select(it.{grup.selector}).Count().ToString()");
+                                else if (grup.summaryType == "sum") summary.Add($"it.Select(it.{grup.selector}).Sum().ToString()");
+                                else if (grup.summaryType == "avg") summary.Add($"it.Select(it.{grup.selector}).Average().ToString()");
+                                else if (grup.summaryType == "max") summary.Add($"it.Select(it.{grup.selector}).OrderBy(it desc).FirstOrDefault().ToString()");
+                                else if (grup.summaryType == "min") summary.Add($"it.Select(it.{grup.selector}).OrderBy(it asc).FirstOrDefault().ToString()");
+                                else summary.Add("\"\"");
                             }
                             else summary.Add("\"\"");
                         }
-                        consulta += ",it.Count() as count";
                         if (summary.Any()) consulta += ",new[]{" + string.Join(",", summary.ToArray()) + "}.ToList() as summary";
-                        if (!item.isExpanded) consulta += ",\"\" as items";
                     }
                 }
                 else
@@ -125,6 +127,7 @@ namespace Abasto.Libreria.DevExtreme
                     consulta += $", it.GroupBy({item.selector}).Select(new (it.Key as key";
                     contar++;
                 }
+                consulta += ",it.Count() as count";
 
                 if (string.IsNullOrEmpty(key))
                 {
@@ -133,7 +136,9 @@ namespace Abasto.Libreria.DevExtreme
                 }
                 if (!item.isExpanded) break;
             }
+            consulta += ",\"\" as items";
             for (int i = 0; i < contar; i++) consulta += ")).OrderBy(key).ToList() as items";
+
             //if (contar > 0) query.Select($"new({string.Join(",", columna.Distinct().ToArray())})");
             query = query.GroupBy(key).Select($"new({consulta})").OrderBy($"key {order}");
             if (key.EndsWith("Year") && paginate.take == null) paginate.take = 5;
@@ -163,8 +168,8 @@ namespace Abasto.Libreria.DevExtreme
             int c = 0;
             foreach (object item in data)
             {
-                var type = item.GetType();
-                if (type == typeof(JArray))
+                Type type = item != null ? item.GetType() : null;
+                if (type == typeof(JArray) || type == typeof(Array))
                 {
                     if (string.IsNullOrEmpty(union) && !string.IsNullOrEmpty(recursiva)) continue;
                     var recurso = JsonConvert.DeserializeObject<object[]>(JsonConvert.SerializeObject(item)).ConsultaWhere();
@@ -176,7 +181,7 @@ namespace Abasto.Libreria.DevExtreme
                 {
                     if (c == 0) columna = item.ToString();
                     else if (c == 1) operador = item.ToString();
-                    else if (c == 2) valor = item.ToString();
+                    else if (c == 2) valor = item != null ? item.ToString() : null;
                     else if (c == 3)
                     {
                         union = string.IsNullOrEmpty(recursiva) ? string.Empty : item.ToString();
@@ -194,8 +199,8 @@ namespace Abasto.Libreria.DevExtreme
         {
             string consulta = string.Empty;
             if (string.IsNullOrEmpty(columna) || string.IsNullOrEmpty(operador)) return consulta;
-            if (operador == "=" || string.IsNullOrEmpty(valor)) operador = $" == \"{valor}\"";
-            else if ((operador == ">" || operador == ">=" || operador == "<" || operador == "<=") && !string.IsNullOrEmpty(valor)) operador = $" {operador} \"{valor}\"";
+            if (operador == "=" || string.IsNullOrEmpty(valor)) operador = " == " + (valor == null ? "null" : $"\"{valor}\"");
+            else if (operador == ">" || operador == ">=" || operador == "<" || operador == "<=") operador = $" {operador} \"{valor}\"";
             else if (operador == "contains" && valor != null) operador = $".ToString().ToLower().Contains(\"{valor.ToLower()}\")";
             if (!string.IsNullOrEmpty(columna) && !string.IsNullOrEmpty(operador)) consulta += $"{columna}{operador} ";
             return consulta;

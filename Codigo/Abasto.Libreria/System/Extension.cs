@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
-namespace Abasto.Libreria.Data
+namespace Abasto.Libreria.System
 {
     public static partial class Extension
     {
@@ -40,10 +38,28 @@ namespace Abasto.Libreria.Data
                 return value;
             }
         }
+        public static DateTime TimeZone(this DateTime value, string timeZone)
+        {
+            value = TimeZoneInfo.ConvertTime(value, TimeZoneInfo.FindSystemTimeZoneById(Zone(timeZone)));
+            return value;
+        }
+        private static string Zone(string timeZone)
+        {
+            if (timeZone.Length <= 2)
+            {
+                switch (timeZone.ToUpper())
+                {
+                    case "BO": timeZone = "SA Western Standard Time"; break;
+                    case "MX": timeZone = "Central Standard Time (Mexico)"; break;
+                    default: timeZone = "UTC"; break;
+                }
+            }
+            return timeZone;
+        }
         public static DataTable ToDataTable<T>(this IList<T> data) where T : class
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-            System.Data.DataTable table = new System.Data.DataTable();
+            DataTable table = new DataTable();
             foreach (PropertyDescriptor prop in properties)
             {
                 var propertyType = prop.PropertyType;
