@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Api", "Abasto.Negocio.Api\Abasto.Negocio.Api.csproj", "{57631650-62F6-4FE4-A447-BC54633A3109}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Lib", "Abasto.Lib\Abasto.Lib.csproj", "{BE4250D5-1049-45C8-B4B5-2BBAE04FD387}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Lib.Infrastructure", "Abasto.Lib.Infrastructure\Abasto.Lib.Infrastructure.csproj", "{E8D0432A-95B9-4601-9AF1-8E696F99F74C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Negocio", "Abasto.Negocio\Abasto.Negocio.csproj", "{EFE3B4B4-9AC1-4CBC-8745-31B12F67B2E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Mvc.Cliente", "Abasto.Mvc.Cliente\Abasto.Mvc.Cliente.csproj", "{4ECF651F-FDBB-44AB-B806-465311C8422A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Negocio.Api", "Abasto.Negocio.Api\Abasto.Negocio.Api.csproj", "{4ECF651F-FDBB-44AB-B806-465311C8422A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Mvc.Cliente", "Abasto.Mvc.Cliente\Abasto.Mvc.Cliente.csproj", "{68FD83E3-5D2F-47D3-992A-E54417055596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{57631650-62F6-4FE4-A447-BC54633A3109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57631650-62F6-4FE4-A447-BC54633A3109}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57631650-62F6-4FE4-A447-BC54633A3109}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57631650-62F6-4FE4-A447-BC54633A3109}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE4250D5-1049-45C8-B4B5-2BBAE04FD387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE4250D5-1049-45C8-B4B5-2BBAE04FD387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE4250D5-1049-45C8-B4B5-2BBAE04FD387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE4250D5-1049-45C8-B4B5-2BBAE04FD387}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8D0432A-95B9-4601-9AF1-8E696F99F74C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8D0432A-95B9-4601-9AF1-8E696F99F74C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8D0432A-95B9-4601-9AF1-8E696F99F74C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8D0432A-95B9-4601-9AF1-8E696F99F74C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE3B4B4-9AC1-4CBC-8745-31B12F67B2E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE3B4B4-9AC1-4CBC-8745-31B12F67B2E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE3B4B4-9AC1-4CBC-8745-31B12F67B2E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE3B4B4-9AC1-4CBC-8745-31B12F67B2E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4ECF651F-FDBB-44AB-B806-465311C8422A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4ECF651F-FDBB-44AB-B806-465311C8422A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ECF651F-FDBB-44AB-B806-465311C8422A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ECF651F-FDBB-44AB-B806-465311C8422A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68FD83E3-5D2F-47D3-992A-E54417055596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FD83E3-5D2F-47D3-992A-E54417055596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FD83E3-5D2F-47D3-992A-E54417055596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FD83E3-5D2F-47D3-992A-E54417055596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace Abasto.Negocio.Api.Controllers
 {
-    public class ContratoController : Controller
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Contrato";
+            ViewBag.Title = "Home Page";
 
             return View();
         }
