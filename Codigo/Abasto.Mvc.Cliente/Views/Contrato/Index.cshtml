@@ -1,0 +1,235 @@
+﻿
+@section scripts
+    {
+    @Scripts.Render("~/bundles/exportardatagrid")
+    @Scripts.Render("~/bundles/contrato")
+    <script type="text/javascript">
+        Page.Init();
+    </script>
+}
+<div class="cuerpo">
+    <div class="row">
+        <!--TITULO FORMULARIO-->
+        <div class="col-xs-12 col-sm-8">
+            <p class="titulopagina"><span id="objNombre"></span>&nbsp;<small id="lblRegistroSeleccionado"></small></p>
+            <div id="hidRegistroSeleccionado" hidden="hidden">0</div>
+        </div>
+        <!--BOTONES FORMULARIO-->
+        <div id="pnlAcciones" class="col-xs-12 col-sm-4 text-right">
+            <nav>
+                <div id="divBotonesBuscar">
+                    <div id="btnBuscar" ></div>
+                    <div id="btnLimpiar" ></div>                   
+                </div>
+                <div id="divBotonesDatos">                   
+                    <div id="btnNuevo"></div>
+                    <div id="btnGuardar"></div>
+                    <div id="btnCancelar"></div>
+                    <div id="btnEliminar"></div>                   
+                </div>           
+            </nav>
+        </div>
+    </div>
+    <!--CONTENIDO-->
+    <div>
+        <ul class="nav nav-tabs" id="tabContainer" role="tablist">
+            <li role="presentation" id="tabBuscarLi" class="active">
+                <a href="#busqueda" id="tabBuscar" aria-controls="home" role="tab" data-toggle="tab">B&uacute;squeda</a>
+            </li>
+            <li role="presentation" id="tabDatosLi">
+                <a href="#datos" id="tabDatos" aria-controls="profile" role="tab" data-toggle="tab">Datos</a>
+            </li>           
+        </ul>
+        <div class="tab-content">
+            <div id="busqueda" role="tabpanel" class="tab-pane fade in active">
+                <!--FILTROS BUSQUEDA-->
+                <div class="panel-group" id="divAccordionBusqueda" role="tablist" aria-multiselectable="true">
+                    <div id="divBusquedaRapida" class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Fecha</label>
+                                        <div id="ddlBusFecha"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Representante Legal</label>
+                                        <div id="ddlBusRepresentante"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nombre Proveedor</label>
+                                        <div id="ddlBusProveedor"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Documento Proveedor</label>
+                                        <div id="ddlBusDocumento"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Domicilio</label>
+                                        <div id="ddlBusDomicilio"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Direccion</label>
+                                        <div id="ddlBusDireccion"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Ciudad</label>
+                                        <div id="ddlBusCiudad"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Importe</label>
+                                        <div id="ddlBusImporte"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cuenta</label>
+                                        <div id="ddlBusCuenta"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-warning" role="alert" id="alert-warning" style="display:none;"></div>
+                <!--RESULTADO BUSQUEDA-->
+                <div id="divResultadoBusqueda">
+                    <div class="table-responsive">
+                        <div id="grdBusqueda"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="datos" role="tabpanel" class="tab-pane fade">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosEmpresa">Empresa</label>
+                                                    <div id="ddlDatosEmpresa"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosId">Código</label>
+                                                    <div id="ddlDatosId"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosCampo">Campo</label>
+                                                    <div id="ddlDatosCampo"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosFechaCreacion">Fecha Txn</label>
+                                                    <div id="ddlDatosFechaCreacion"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosFecha">Fecha</label>
+                                                    <div id="ddlDatosFecha"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosEstado">Estado</label>
+                                                    <div id="ddlDatosEstado"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="ddlDatosComentario">Comentario</label>
+                                                            <div id="ddlDatosComentario"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6" id="ddlDatosComentarioRechazadoMostrar">
+                                                <div class="form-group">
+                                                    <label for="ddlDatosComentarioRechazado">
+                                                        Comentario
+                                                        <span id="ddlDatosComentarioEstado">Rechazado</span>
+                                                    </label>
+                                                    <div id="ddlDatosComentarioRechazado"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="divNavegacion" class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="navegador-registros">
+                                        <a id="btnFirst" href="#" class="lnk-cardinal-ligth1"
+                                           onclick="Page.MoveFirst();">
+                                            <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                                        </a>
+                                        <a id="btnPrevious" href="#" class="lnk-cardinal-ligth1"
+                                           onclick="Page.MovePrevious();">
+                                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                        </a>
+                                        <small id="lblDatosRegistrosCounter">...</small>
+                                        <a id="btnNext" href="#" class="lnk-cardinal-ligth1"
+                                           onclick="Page.MoveNext();">
+                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        </a>
+                                        <a id="btnLast" href="#" class="lnk-cardinal-ligth1"
+                                           onclick="Page.MoveLast();">
+                                            <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+           
+        </div>        
+    </div>
+
+  
+</div>

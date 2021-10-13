@@ -40,7 +40,7 @@ namespace Abasto.Lib.Infrastructure.Extensions
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            //services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IContratoService, IContratoService>();
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();

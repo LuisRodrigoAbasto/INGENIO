@@ -30,6 +30,10 @@ namespace Abasto.Lib.Infrastructure.Repositories
         {
             return await _entities.FindAsync(id);
         }
+        public async Task<T> GetById(string id)
+        {
+            return await _entities.FindAsync(id);
+        }
 
         public async Task Add(T entity)
         {

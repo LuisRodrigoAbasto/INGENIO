@@ -6,9 +6,9 @@ namespace Abasto.Lib.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IPostRepository PostRepository { get; }
+        //IContratoRepository ContratoRepository { get; }
 
-        //IRepository<User> UserRepository { get; }
+        IRepository<Contrato> ContratoRepository { get; }
 
         //IRepository<Comment> CommentRepository { get; }
 

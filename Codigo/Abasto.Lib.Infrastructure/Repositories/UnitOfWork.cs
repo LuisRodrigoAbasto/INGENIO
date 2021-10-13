@@ -8,7 +8,7 @@ namespace Abasto.Lib.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly NegocioContext _context;
-        //private readonly IPostRepository _postRepository;
+        private readonly IContratoRepository _contratoRepository;
         //private readonly IRepository<User> _userRepository;
         //private readonly IRepository<Comment> _commentRepository;
         private readonly ISecurityRepository _securityRepository;
@@ -18,7 +18,7 @@ namespace Abasto.Lib.Infrastructure.Repositories
             _context = context;
         }
 
-        //public IPostRepository PostRepository => _postRepository ?? new PostRepository(_context);
+        public IContratoRepository PostRepository => _contratoRepository ?? new ContratoRepository(_context);
 
         //public IRepository<User> UserRepository => _userRepository ?? new BaseRepository<User>(_context);
 

@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.ja.js)
-* Version: 21.1.6
-* Build date: Mon Sep 27 2021
+* Version: 21.1.4
+* Build date: Mon Jun 21 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -582,14 +582,7 @@
             "dxGantt-zoomIn": "\u62e1\u5927",
             "dxGantt-zoomOut": "\u7e2e\u5c0f",
             "dxGantt-fullScreen": "\u5168\u753b\u9762\u8868\u793a",
-            "dxGantt-quarter": "Q{0}",
-            "dxGantt-sortingAscendingText": "\u6607\u9806\u306b\u4e26\u3079\u66ff\u3048",
-            "dxGantt-sortingDescendingText": "\u964d\u9806\u306b\u4e26\u3079\u66ff\u3048",
-            "dxGantt-sortingClearText": "\u4e26\u3079\u66ff\u3048\u3092\u30af\u30ea\u30a2",
-            "dxGantt-showResources": "\u30ea\u30bd\u30fc\u30b9\u3092\u8868\u793a",
-            "dxGantt-showDependencies": "\u4f9d\u5b58\u95a2\u4fc2\u3092\u8868\u793a",
-            "dxGantt-dialogStartDateValidation": "\u958b\u59cb\u65e5\u3092 {0} \u4ee5\u964d\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
-            "dxGantt-dialogEndDateValidation": "\u7d42\u4e86\u65e5\u306f {0} \u3088\u308a\u5f8c\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059"
+            "dxGantt-quarter": "Q{0}"
         }
     })
 }));

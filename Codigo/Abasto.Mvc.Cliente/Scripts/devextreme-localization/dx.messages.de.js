@@ -1,7 +1,7 @@
 /*!
 * DevExtreme (dx.messages.de.js)
-* Version: 21.1.6
-* Build date: Mon Sep 27 2021
+* Version: 21.1.4
+* Build date: Mon Jun 21 2021
 *
 * Copyright (c) 2012 - 2021 Developer Express Inc. ALL RIGHTS RESERVED
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
@@ -582,14 +582,7 @@
             "dxGantt-zoomIn": "Vergr\xf6\xdfern",
             "dxGantt-zoomOut": "Verkleinern",
             "dxGantt-fullScreen": "Vollbildmodus",
-            "dxGantt-quarter": "Q{0}",
-            "dxGantt-sortingAscendingText": "Aufsteigend sortieren",
-            "dxGantt-sortingDescendingText": "Absteigend sortieren",
-            "dxGantt-sortingClearText": "Sortierung aufheben",
-            "dxGantt-showResources": "Ressourcen Anzeigen",
-            "dxGantt-showDependencies": "Abh\xe4ngigkeiten Anzeigen",
-            "dxGantt-dialogStartDateValidation": "Startdatum muss sp\xe4ter sein als {0}",
-            "dxGantt-dialogEndDateValidation": "Enddatum muss sp\xe4ter sein als {0}"
+            "dxGantt-quarter": "Q{0}"
         }
     })
 }));
