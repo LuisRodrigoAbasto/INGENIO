@@ -1,4 +1,5 @@
-﻿using Abasto.Lib.BulkExtensions;
+﻿using Abasto.Extensions;
+using Abasto.Lib.BulkExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace Abasto.Library.BulkExtensions
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message, ex);
+                    throw new AbastoException(ex.Message, ex);
                 }
         }
         ///column Imput es true=a las columnas de entrada, false=ignorar columnas de entradas
@@ -98,7 +99,7 @@ namespace Abasto.Library.BulkExtensions
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message, ex);
+                    throw new AbastoException(ex.Message, ex);
                 }
         }
         public static async Task BulkDeleteAsync<T>(this DbContext context, IList<T> entities, string table, string key) where T : class
@@ -130,7 +131,7 @@ namespace Abasto.Library.BulkExtensions
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message, ex);
+                    throw new AbastoException(ex.Message, ex);
                 }
         }
         private static async Task BulkCopyAsync(DataTable dataTable, SqlBulkCopy bulkCopy)

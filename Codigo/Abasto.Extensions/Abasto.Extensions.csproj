@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AbastoException.cs" />
     <Compile Include="Excel\Excel.cs" />
+    <Compile Include="Excel\ExcelConfig.cs" />
     <Compile Include="General\Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Encrypt.cs" />
