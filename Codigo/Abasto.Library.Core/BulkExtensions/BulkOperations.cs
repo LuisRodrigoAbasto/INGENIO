@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Abasto.Extensions;
 
 namespace Abasto.Library.Core.BulkExtensions
 {

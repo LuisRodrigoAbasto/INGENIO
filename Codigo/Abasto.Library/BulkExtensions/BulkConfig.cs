@@ -1,4 +1,4 @@
-﻿namespace Abasto.Lib.BulkExtensions
+﻿namespace Abasto.Library.BulkExtensions
 {
     public class BulkConfig
     {
