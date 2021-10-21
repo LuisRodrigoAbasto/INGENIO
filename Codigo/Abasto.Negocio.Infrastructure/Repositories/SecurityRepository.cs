@@ -8,7 +8,7 @@ namespace Abasto.Negocio.Infrastructure.Repositories
 {
     public class SecurityRepository : BaseRepository<Security>, ISecurityRepository
     {
-        public SecurityRepository(SocialMediaContext context) : base(context) { }
+        public SecurityRepository(NegocioContext context) : base(context) { }
 
         public async Task<Security> GetLoginByCredentials(UserLogin login)
         {

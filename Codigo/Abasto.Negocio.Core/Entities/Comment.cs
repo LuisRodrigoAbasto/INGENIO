@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Abasto.Negocio.Core.Entities
 {
-    public partial class Comment : BaseEntity
+    public partial class Comment
     {
+        public int Id { get; set; }
         public int PostId { get; set; }
         public int UserId { get; set; }
         public string Description { get; set; }

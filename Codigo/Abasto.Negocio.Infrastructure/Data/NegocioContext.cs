@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace Abasto.Negocio.Infrastructure.Data
 {
-    public partial class SocialMediaContext : DbContext
+    public partial class NegocioContext : DbContext
     {
-        public SocialMediaContext()
+        public NegocioContext()
         {
         }
 
-        public SocialMediaContext(DbContextOptions<SocialMediaContext> options)
+        public NegocioContext(DbContextOptions<NegocioContext> options)
             : base(options)
         {
         }

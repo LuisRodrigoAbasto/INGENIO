@@ -7,13 +7,13 @@ namespace Abasto.Negocio.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly SocialMediaContext _context;
+        private readonly NegocioContext _context;
         private readonly IPostRepository _postRepository;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Comment> _commentRepository;
         private readonly ISecurityRepository _securityRepository;
 
-        public UnitOfWork(SocialMediaContext context)
+        public UnitOfWork(NegocioContext context)
         {
             _context = context;
         }

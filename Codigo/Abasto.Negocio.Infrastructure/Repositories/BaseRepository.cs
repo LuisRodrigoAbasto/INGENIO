@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Abasto.Negocio.Infrastructure.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IRepository<T> where T : class
     {
-        private readonly SocialMediaContext _context;
+        private readonly NegocioContext _context;
         protected readonly DbSet<T> _entities;
 
-        public BaseRepository(SocialMediaContext context)
+        public BaseRepository(NegocioContext context)
         {
             _context = context;
             _entities = context.Set<T>();

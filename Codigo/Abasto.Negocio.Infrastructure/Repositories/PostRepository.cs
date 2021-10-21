@@ -12,7 +12,7 @@ namespace Abasto.Negocio.Infrastructure.Repositories
 {
     public class PostRepository : BaseRepository<Post>, IPostRepository
     {
-        public PostRepository(SocialMediaContext context) : base(context) { }
+        public PostRepository(NegocioContext context) : base(context) { }
 
         public async Task<IEnumerable<Post>> GetPostsByUser(int userId)
         {

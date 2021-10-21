@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Abasto.Negocio.Core.Entities
 {
-    public partial class User : BaseEntity
+    public partial class User
     {
         public User()
         {
             Comments = new HashSet<Comment>();
             Posts = new HashSet<Post>();
         }
-
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

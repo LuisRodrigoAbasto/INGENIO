@@ -23,8 +23,8 @@ namespace Abasto.Negocio.Infrastructure.Extensions
     {
         public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<SocialMediaContext>(options =>
-               options.UseSqlServer(configuration.GetConnectionString("SocialMedia"))
+            services.AddDbContext<NegocioContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("NegocioContext"))
            );
 
             return services;

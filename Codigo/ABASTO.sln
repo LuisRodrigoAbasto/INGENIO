@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{EB9C6527-4E85-4590-AA48-93B17F6D54FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Api", "Abasto.Negocio.Api\Abasto.Negocio.Api.csproj", "{56BF770F-1213-43BF-AAAF-61D439C9086C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Library.Core", "Abasto.Library.Core\Abasto.Library.Core.csproj", "{88774C0B-3854-4F4D-8041-4CC6E4D3D5C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Infrastructure", "Abasto.Negocio.Infrastructure\Abasto.Negocio.Infrastructure.csproj", "{65F56D2B-1F9E-4447-99F8-7DDFF5E5DC16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Negocio.Core", "Abasto.Negocio.Core\Abasto.Negocio.Core.csproj", "{C67AA7E7-3D85-4722-B51C-6442D5572A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Core", "Abasto.Negocio.Core\Abasto.Negocio.Core.csproj", "{C67AA7E7-3D85-4722-B51C-6442D5572A90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Negocio.Api", "Abasto.Negocio.Api\Abasto.Negocio.Api.csproj", "{E265D747-7E5E-423D-97DA-77710409F739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{EB9C6527-4E85-4590-AA48-93B17F6D54FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB9C6527-4E85-4590-AA48-93B17F6D54FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB9C6527-4E85-4590-AA48-93B17F6D54FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56BF770F-1213-43BF-AAAF-61D439C9086C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56BF770F-1213-43BF-AAAF-61D439C9086C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56BF770F-1213-43BF-AAAF-61D439C9086C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56BF770F-1213-43BF-AAAF-61D439C9086C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88774C0B-3854-4F4D-8041-4CC6E4D3D5C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88774C0B-3854-4F4D-8041-4CC6E4D3D5C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88774C0B-3854-4F4D-8041-4CC6E4D3D5C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{C67AA7E7-3D85-4722-B51C-6442D5572A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C67AA7E7-3D85-4722-B51C-6442D5572A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C67AA7E7-3D85-4722-B51C-6442D5572A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E265D747-7E5E-423D-97DA-77710409F739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E265D747-7E5E-423D-97DA-77710409F739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E265D747-7E5E-423D-97DA-77710409F739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E265D747-7E5E-423D-97DA-77710409F739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

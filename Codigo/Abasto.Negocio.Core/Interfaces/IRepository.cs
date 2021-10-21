@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Abasto.Negocio.Core.Interfaces
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         Task<T> GetById(int id);

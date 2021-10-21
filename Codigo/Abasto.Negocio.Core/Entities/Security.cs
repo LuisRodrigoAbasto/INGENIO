@@ -2,8 +2,10 @@
 
 namespace Abasto.Negocio.Core.Entities
 {
-    public class Security : BaseEntity
+    public class Security
     {
+        public int Id { get; set; }
+
         public string User { get; set; }
 
         public string UserName { get; set; }
