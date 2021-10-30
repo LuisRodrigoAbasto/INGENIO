@@ -1,37 +1,31 @@
-﻿using Abasto.Library.Modelo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
-using System.Data.Entity;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Abasto.Library.BulkExtensions
+namespace Abasto.Library.Core.BulkExtensions
 {
     internal static partial class BulkOperations
     {///column Imput es true=a las columnas de entrada, false=ignorar columnas de entradas
-        public static async Task BulkInsertAsync<T>(this DbContext context, IList<T> entities, Action<BulkConfig> options) where T : class
+        public static async Task BulkInsertAsync<T>(this DbContext context, IList<T> entities, string table, bool columnImput = true, params string[] column) where T : class
         {
             if (!entities.Take(1).Any()) return;
-            BulkConfig bulkConfig = new BulkConfig();
-            options?.Invoke(bulkConfig);
-            DbConnection Connection = context.Database.Connection;
-            var UnderlyingTransaction = context.Database.CurrentTransaction.UnderlyingTransaction;
-            SqlConnection sqlConnection = (SqlConnection)Connection;
-            SqlTransaction sqlTransaction = (SqlTransaction)UnderlyingTransaction;
-
+            DbConnection connection = context.Database.GetDbConnection();
+            var transaction = context.Database.CurrentTransaction;
             var config = new SqlBulkCopyOptions();
-            //config.HasFlag(SqlBulkCopyOptions.KeepIdentity);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection, config, sqlTransaction))
+            using var sqlBulkCopy = GetSqlBulkCopy((SqlConnection)connection, transaction, config);
+            //config.HasFlag(SqlBulkCopyOptions.KeepIdentity);           
                 try
                 {
-                    bulkCopy.DestinationTableName = bulkConfig.TableName;
-                    var dataTable = entities.ToDataTable();
-                    await BulkCopyAsync(dataTable, bulkCopy);
+                sqlBulkCopy.DestinationTableName = table;
+                    var dataTable = entities.ToDataTable(columnImput, column);
+                    await BulkCopyAsync(dataTable, sqlBulkCopy);
                 }
                 catch (Exception ex)
                 {
@@ -42,10 +36,7 @@ namespace Abasto.Library.BulkExtensions
         public static async Task BulkUpdateAsync<T>(this DbContext context, IList<T> entities, string table, string key, bool columnInput = true, params string[] column) where T : class
         {
             if (!entities.Take(1).Any()) return;
-            DbConnection Connection = context.Database.Connection;
-            var UnderlyingTransaction = context.Database.CurrentTransaction.UnderlyingTransaction;
-            SqlConnection sqlConnection = (SqlConnection)Connection;
-            SqlTransaction sqlTransaction = (SqlTransaction)UnderlyingTransaction;
+ 
             if (column.Count() > 0)
             {
                 if (columnInput)
@@ -77,14 +68,15 @@ namespace Abasto.Library.BulkExtensions
             }
             atributo = atributo.Trim(',');
             string TmpTable = $"#TmpTable_{DateTime.Now.ToString("dd_MM_yyyy_HH_mm_fffffff")}";
-            await context.Database.ExecuteSqlCommandAsync($"create table {TmpTable}({atributo})");
+            await context.Database.ExecuteSqlInterpolatedAsync($"create table {TmpTable}({atributo})");
+            DbConnection connection = context.Database.GetDbConnection();
+            var transaction = context.Database.CurrentTransaction;
             var config = new SqlBulkCopyOptions();
-            //config.HasFlag(SqlBulkCopyOptions.KeepIdentity);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection, config, sqlTransaction))
-                try
+            using var sqlBulkCopy = GetSqlBulkCopy((SqlConnection)connection, transaction, config);
+            try
                 {
-                    bulkCopy.DestinationTableName = TmpTable;
-                    await BulkCopyAsync(dataTable, bulkCopy);
+                    sqlBulkCopy.DestinationTableName = TmpTable;
+                    await BulkCopyAsync(dataTable, sqlBulkCopy);
                     var scriptUpdate = string.Empty;
                     foreach (var item in col)
                     {
@@ -92,9 +84,9 @@ namespace Abasto.Library.BulkExtensions
                         scriptUpdate += $"tabla.{item}=temp.{item}";
                     }
                     scriptUpdate = scriptUpdate.Trim().Trim(',');
-                    await context.Database.ExecuteSqlCommandAsync($"update tabla set {scriptUpdate} from {table} as tabla inner join {TmpTable} as temp on tabla.{key}=temp.{key}");
+                    await context.Database.ExecuteSqlInterpolatedAsync($"update tabla set {scriptUpdate} from {table} as tabla inner join {TmpTable} as temp on tabla.{key}=temp.{key}");
                     //await Task.Delay(dataTable.Rows.Count + dataTable.Rows.Count);
-                    await context.Database.ExecuteSqlCommandAsync($"drop table {TmpTable}");
+                    await context.Database.ExecuteSqlInterpolatedAsync($"drop table {TmpTable}");
                 }
                 catch (Exception ex)
                 {
@@ -103,11 +95,7 @@ namespace Abasto.Library.BulkExtensions
         }
         public static async Task BulkDeleteAsync<T>(this DbContext context, IList<T> entities, string table, string key) where T : class
         {
-            if (!entities.Take(1).Any()) return;
-            DbConnection Connection = context.Database.Connection;
-            var UnderlyingTransaction = context.Database.CurrentTransaction.UnderlyingTransaction;
-            SqlConnection sqlConnection = (SqlConnection)Connection;
-            SqlTransaction sqlTransaction = (SqlTransaction)UnderlyingTransaction;
+            if (!entities.Take(1).Any()) return;           
             var dataTable = entities.ToDataTable(true, key);
             var atributo = string.Empty;
             DataColumn column = dataTable.Columns[key];
@@ -117,16 +105,17 @@ namespace Abasto.Library.BulkExtensions
             else if (column.DataType == typeof(DateTime)) atributo += $"{column.ColumnName} datetime";
 
             string TmpTable = $"#TmpTable{DateTime.Now.ToString("dd_MM_yyyy_HH_mm_fffffff")}";
-            await context.Database.ExecuteSqlCommandAsync($"create table {TmpTable}({atributo})");
+            await context.Database.ExecuteSqlInterpolatedAsync($"create table {TmpTable}({atributo})");
+            DbConnection connection = context.Database.GetDbConnection();
+            var transaction = context.Database.CurrentTransaction;
             var config = new SqlBulkCopyOptions();
-            //config.HasFlag(SqlBulkCopyOptions.KeepIdentity);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection, config, sqlTransaction))
-                try
+            using var sqlBulkCopy = GetSqlBulkCopy((SqlConnection)connection, transaction, config);
+            try
                 {
-                    bulkCopy.DestinationTableName = TmpTable;
-                    await BulkCopyAsync(dataTable, bulkCopy);
-                    await context.Database.ExecuteSqlCommandAsync($"delete from {table} where {key} in (select temp.{key} from {TmpTable} as temp)");
-                    await context.Database.ExecuteSqlCommandAsync($"drop table {TmpTable}");
+                    sqlBulkCopy.DestinationTableName = TmpTable;
+                    await BulkCopyAsync(dataTable, sqlBulkCopy);
+                    await context.Database.ExecuteSqlInterpolatedAsync($"delete from {table} where {key} in (select temp.{key} from {TmpTable} as temp)");
+                    await context.Database.ExecuteSqlInterpolatedAsync($"drop table {TmpTable}");
                 }
                 catch (Exception ex)
                 {
@@ -172,6 +161,12 @@ namespace Abasto.Library.BulkExtensions
                 table.Rows.Add(row);
             }
             return table;
+        }
+        private static SqlBulkCopy GetSqlBulkCopy(SqlConnection sqlConnection, IDbContextTransaction transaction, SqlBulkCopyOptions config)
+        {
+            var sqlTransaction = transaction == null ? null : (SqlTransaction)((DbTransaction)transaction);
+            var sqlBulkCopy = new SqlBulkCopy(sqlConnection, config, sqlTransaction);
+            return sqlBulkCopy;
         }
     }
 }
