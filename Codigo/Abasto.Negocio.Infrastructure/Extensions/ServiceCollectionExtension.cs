@@ -51,7 +51,7 @@ namespace Abasto.Negocio.Infrastructure.Extensions
                 var request = accesor.HttpContext.Request;
                 var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
                 return new UriService(absoluteUri);
-            });
+            });             
 
             return services;
         }
@@ -60,7 +60,7 @@ namespace Abasto.Negocio.Infrastructure.Extensions
         {
             services.AddSwaggerGen(doc =>
             {
-                doc.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Media API", Version = "v1" });
+                doc.SwaggerDoc("v1", new OpenApiInfo { Title = "Abasto Negocio API", Version = "v1" });
 
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
                 doc.IncludeXmlComments(xmlPath);

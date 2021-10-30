@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abasto.Library\Abasto.Library.csproj" />
-    <ProjectReference Include="..\Abasto.Negocio.Core\Abasto.Negocio.Core.csproj" />
   </ItemGroup>
 
 </Project>
