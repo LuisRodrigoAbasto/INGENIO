@@ -1,5 +1,7 @@
-﻿using Abasto.Negocio.Infrastructure.Repositories;
+﻿using Abasto.Negocio.Core.Interfaces;
+using Abasto.Negocio.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Abasto.Negocio.Api.Controllers
 {
@@ -7,10 +9,15 @@ namespace Abasto.Negocio.Api.Controllers
     [ApiController]
     public class PublicacionController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Buscar()
+        private readonly IIngPublicacionRepository _ingPublicacionRepository;
+        public PublicacionController(IIngPublicacionRepository ingPublicacionRepository)
         {
-            var lista = new IngPublicacionRepository().Get();
+            _ingPublicacionRepository = ingPublicacionRepository;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Buscar()
+        {
+            var lista =await _ingPublicacionRepository.ToListAsync();
             return Ok(lista);
         }
     }
