@@ -1,5 +1,7 @@
 ﻿using Abasto.Negocio.Core.Entities;
 using Abasto.Negocio.Core.Interfaces;
+using Abasto.Negocio.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,14 @@ namespace Abasto.Negocio.Infrastructure.Repositories
 {
     public class IngPublicacionRepository:IIngPublicacionRepository
     {
+        private readonly NegocioContext _context;
+        public IngPublicacionRepository(NegocioContext context)
+        {
+            this._context = context;
+        }
         public async Task<IEnumerable<IngPublicacion>> ToListAsync()
         {
-            var lista = Enumerable.Range(1, 10).Select(x => new IngPublicacion
-            {
-                PubId = x,
-                PubDescripcion = $"Descripcion {x}",
-                PubFecha = DateTime.Now,
-                PubImage = "Esto es una Imagen",
-                UsuId = x * 2
-            });
-            await Task.Delay(19);
+            var lista = await this._context.IngPublicacion.ToListAsync();
             return lista;
         }
     }

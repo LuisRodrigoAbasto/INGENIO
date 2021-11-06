@@ -1,9 +1,11 @@
 using Abasto.Negocio.Core.Interfaces;
+using Abasto.Negocio.Infrastructure.Data;
 using Abasto.Negocio.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,6 +37,9 @@ namespace Abasto.Negocio.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Abasto.Negocio.Api", Version = "v1" });
             });
             //
+            services.AddDbContext<NegocioContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("NegocioContext"))
+            );
             services.AddTransient<IIngPublicacionRepository, IngPublicacionRepository>();
         }
 
