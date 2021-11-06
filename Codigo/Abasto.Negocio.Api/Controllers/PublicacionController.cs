@@ -1,4 +1,5 @@
-﻿using Abasto.Negocio.Core.Entities;
+﻿using Abasto.Library.General;
+using Abasto.Negocio.Core.Entities;
 using Abasto.Negocio.Core.Interfaces;
 using Abasto.Negocio.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ namespace Abasto.Negocio.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(IngPublicacion obj)
         {
+            obj.MapToObject();
             await _ingPublicacionRepository.Add(obj);
             return Ok(obj.PubId);
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Abasto.Library.Core.BulkExtensions
+namespace Abasto.Library.BulkExtensions.Core
 {
     internal static partial class BulkOperations
     {///column Imput es true=a las columnas de entrada, false=ignorar columnas de entradas

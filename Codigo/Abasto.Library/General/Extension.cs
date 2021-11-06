@@ -35,6 +35,27 @@ namespace Abasto.Library.General
                 return value;
             }
         }
+
+        //Pasara solo los datos, colocara null a las clase de inyeccion
+        public static T MapToObject<T>(this T value) where T:class
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            foreach (PropertyDescriptor prop in properties)
+            {
+                var propertyType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                var val = prop.GetValue(value);
+                if (val == null) continue;
+                if ((typeof(string) != propertyType) && propertyType.IsClass)
+                {
+                    prop.SetValue(value, null);
+                }
+                else if (propertyType.IsConstructedGenericType)
+                {
+                    prop.SetValue(value, null);
+                }
+            }
+            return value;
+        }
         public static DateTime TimeZone(this DateTime value, string timeZone)
         {
             value = TimeZoneInfo.ConvertTime(value, TimeZoneInfo.FindSystemTimeZoneById(Zone(timeZone)));

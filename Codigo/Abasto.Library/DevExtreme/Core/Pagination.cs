@@ -7,7 +7,7 @@ using System;
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore.DynamicLinq;
 
-namespace Abasto.Library.Core.DevExtreme
+namespace Abasto.Library.DevExtreme.Core
 {
     public static partial class Pagination
     {
