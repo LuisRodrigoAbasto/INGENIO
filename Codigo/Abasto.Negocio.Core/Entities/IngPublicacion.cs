@@ -17,11 +17,13 @@ namespace Abasto.Negocio.Core.Entities
         public long PubId { get; set; }
         public long UsuId { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime PubFecha { get; set; }
 
         [Required, StringLength(1000), Column(TypeName = "varchar")]
         public string PubDescripcion { get; set; }
+
+        [StringLength(500), Column(TypeName = "varchar")]
         public string PubImagen { get; set; }
 
         [ForeignKey("UsuId")]

@@ -22,5 +22,16 @@ namespace Abasto.Negocio.Infrastructure.Repositories
             var lista = await this._context.IngPublicacion.ToListAsync();
             return lista;
         }
+
+        public async Task<IngPublicacion> Get(long id)
+        {
+            var obj = await this._context.IngPublicacion.Where(x=>x.PubId==id).FirstOrDefaultAsync();
+            return obj;
+        }
+        public async Task Add(IngPublicacion obj)
+        {
+            this._context.IngPublicacion.Add(obj);
+            await this._context.SaveChangesAsync();
+        }
     }
 }

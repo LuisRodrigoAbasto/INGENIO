@@ -12,8 +12,8 @@ namespace Abasto.Negocio.Core.Entities
     {
         public IngUsuario()
         {
-            IngComentarios = new HashSet<IngComentario>();
-            IngPublicacions = new HashSet<IngPublicacion>();
+            IngComentario = new HashSet<IngComentario>();
+            IngPublicacion = new HashSet<IngPublicacion>();
         }
         [Key]
         public long UsuId { get; set; }
