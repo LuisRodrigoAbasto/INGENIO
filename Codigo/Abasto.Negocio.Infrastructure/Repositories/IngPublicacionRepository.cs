@@ -23,7 +23,7 @@ namespace Abasto.Negocio.Infrastructure.Repositories
             return lista;
         }
 
-        public async Task<IngPublicacion> Get(long id)
+        public async Task<IngPublicacion> FirstOrDefaultAsync(long id)
         {
             var obj = await this._context.IngPublicacion.Where(x=>x.PubId==id).FirstOrDefaultAsync();
             return obj;

@@ -10,7 +10,7 @@ namespace Abasto.Negocio.Core.Interfaces
     public interface IIngPublicacionRepository
     {
         Task<IEnumerable<IngPublicacion>> ToListAsync();
-        Task<IngPublicacion> Get(long id);
+        Task<IngPublicacion> FirstOrDefaultAsync(long id);
         Task Add(IngPublicacion obj);
     }
 }

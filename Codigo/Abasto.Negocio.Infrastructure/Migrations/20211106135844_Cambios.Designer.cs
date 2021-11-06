@@ -4,14 +4,16 @@ using Abasto.Negocio.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Abasto.Negocio.Infrastructure.Migrations
 {
     [DbContext(typeof(NegocioContext))]
-    partial class NegocioContextModelSnapshot : ModelSnapshot
+    [Migration("20211106135844_Cambios")]
+    partial class Cambios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,11 +120,13 @@ namespace Abasto.Negocio.Infrastructure.Migrations
                     b.HasOne("Abasto.Negocio.Core.Entities.IngPublicacion", "Pub")
                         .WithMany("IngComentario")
                         .HasForeignKey("PubId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Abasto.Negocio.Core.Entities.IngUsuario", "Usu")
                         .WithMany("IngComentario")
                         .HasForeignKey("UsuId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pub");
@@ -135,6 +139,7 @@ namespace Abasto.Negocio.Infrastructure.Migrations
                     b.HasOne("Abasto.Negocio.Core.Entities.IngUsuario", "Usu")
                         .WithMany("IngPublicacion")
                         .HasForeignKey("UsuId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usu");

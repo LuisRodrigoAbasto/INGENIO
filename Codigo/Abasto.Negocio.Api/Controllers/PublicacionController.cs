@@ -27,7 +27,7 @@ namespace Abasto.Negocio.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            var lista = await _ingPublicacionRepository.Get(id);
+            var lista = await _ingPublicacionRepository.FirstOrDefaultAsync(id);
             return Ok(lista);
         }
         

@@ -1,5 +1,6 @@
 using Abasto.Negocio.Core.Interfaces;
 using Abasto.Negocio.Infrastructure.Data;
+using Abasto.Negocio.Infrastructure.Filters;
 using Abasto.Negocio.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +31,11 @@ namespace Abasto.Negocio.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options=> {
+            services.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            })
+            .ConfigureApiBehaviorOptions(options => {
+                options.SuppressModelStateInvalidFilter = true;
             });
             //services.AddSwaggerGen(c =>
             //{
@@ -42,6 +46,9 @@ namespace Abasto.Negocio.Api
             options.UseSqlServer(Configuration.GetConnectionString("NegocioContext"))
             );
             services.AddTransient<IIngPublicacionRepository, IngPublicacionRepository>();
+            services.AddMvc(options => {
+                options.Filters.Add<ValidationFilter>();
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
