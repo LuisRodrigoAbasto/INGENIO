@@ -18,13 +18,14 @@ namespace Abasto.Negocio.Infrastructure.Data
         {
         }
 
-        public virtual DbSet<IngComentario> IngComentario { get; set; }
-        public virtual DbSet<IngPublicacion> IngPublicacion { get; set; }
-        public virtual DbSet<IngUsuario> IngUsuario { get; set; }       
+        public virtual DbSet<ingComentario> ingComentario { get; set; }
+        public virtual DbSet<ingPublicacion> ingPublicacion { get; set; }
+        public virtual DbSet<ingUsuario> ingUsuario { get; set; }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");           
+            //modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
     }

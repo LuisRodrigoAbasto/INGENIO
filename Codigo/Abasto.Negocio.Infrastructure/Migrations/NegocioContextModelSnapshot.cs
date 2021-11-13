@@ -19,137 +19,137 @@ namespace Abasto.Negocio.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngComentario", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingComentario", b =>
                 {
-                    b.Property<long>("ComId")
+                    b.Property<long>("comId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("ComActivo")
+                    b.Property<bool>("comActivo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ComDescripcion")
+                    b.Property<string>("comDescripcion")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<DateTime>("ComFecha")
+                    b.Property<DateTime>("comFecha")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("PubId")
+                    b.Property<long>("pubId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UsuId")
+                    b.Property<long>("usrId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ComId");
+                    b.HasKey("comId");
 
-                    b.HasIndex("PubId");
+                    b.HasIndex("pubId");
 
-                    b.HasIndex("UsuId");
+                    b.HasIndex("usrId");
 
-                    b.ToTable("IngComentario");
+                    b.ToTable("ingComentario");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngPublicacion", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingPublicacion", b =>
                 {
-                    b.Property<long>("PubId")
+                    b.Property<long>("pubId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PubDescripcion")
+                    b.Property<string>("pubDescripcion")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<DateTime>("PubFecha")
+                    b.Property<DateTime>("pubFecha")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("PubImagen")
+                    b.Property<string>("pubImagen")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<long>("UsuId")
+                    b.Property<long>("usrId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("PubId");
+                    b.HasKey("pubId");
 
-                    b.HasIndex("UsuId");
+                    b.HasIndex("usrId");
 
-                    b.ToTable("IngPublicacion");
+                    b.ToTable("ingPublicacion");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngUsuario", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingUsuario", b =>
                 {
-                    b.Property<long>("UsuId")
+                    b.Property<long>("usrId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("UsuActivo")
+                    b.Property<bool>("usrActivo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UsuEmail")
+                    b.Property<string>("usrEmail")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime>("UsuFechaNacimiento")
+                    b.Property<DateTime>("usrFechaNacimiento")
                         .HasColumnType("date");
 
-                    b.Property<string>("UsuNombre")
+                    b.Property<string>("usrNombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("UsuTelefono")
+                    b.Property<string>("usrTelefono")
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
 
-                    b.HasKey("UsuId");
+                    b.HasKey("usrId");
 
-                    b.ToTable("IngUsuario");
+                    b.ToTable("ingUsuario");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngComentario", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingComentario", b =>
                 {
-                    b.HasOne("Abasto.Negocio.Core.Entities.IngPublicacion", "Pub")
-                        .WithMany("IngComentario")
-                        .HasForeignKey("PubId")
+                    b.HasOne("Abasto.Negocio.Core.Entities.ingPublicacion", "ingPublicacion")
+                        .WithMany("ingComentario")
+                        .HasForeignKey("pubId")
                         .IsRequired();
 
-                    b.HasOne("Abasto.Negocio.Core.Entities.IngUsuario", "Usu")
-                        .WithMany("IngComentario")
-                        .HasForeignKey("UsuId")
+                    b.HasOne("Abasto.Negocio.Core.Entities.ingUsuario", "ingUsuario")
+                        .WithMany("ingComentario")
+                        .HasForeignKey("usrId")
                         .IsRequired();
 
-                    b.Navigation("Pub");
+                    b.Navigation("ingPublicacion");
 
-                    b.Navigation("Usu");
+                    b.Navigation("ingUsuario");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngPublicacion", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingPublicacion", b =>
                 {
-                    b.HasOne("Abasto.Negocio.Core.Entities.IngUsuario", "Usu")
-                        .WithMany("IngPublicacion")
-                        .HasForeignKey("UsuId")
+                    b.HasOne("Abasto.Negocio.Core.Entities.ingUsuario", "ingUsuario")
+                        .WithMany("ingPublicacion")
+                        .HasForeignKey("usrId")
                         .IsRequired();
 
-                    b.Navigation("Usu");
+                    b.Navigation("ingUsuario");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngPublicacion", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingPublicacion", b =>
                 {
-                    b.Navigation("IngComentario");
+                    b.Navigation("ingComentario");
                 });
 
-            modelBuilder.Entity("Abasto.Negocio.Core.Entities.IngUsuario", b =>
+            modelBuilder.Entity("Abasto.Negocio.Core.Entities.ingUsuario", b =>
                 {
-                    b.Navigation("IngComentario");
+                    b.Navigation("ingComentario");
 
-                    b.Navigation("IngPublicacion");
+                    b.Navigation("ingPublicacion");
                 });
 #pragma warning restore 612, 618
         }

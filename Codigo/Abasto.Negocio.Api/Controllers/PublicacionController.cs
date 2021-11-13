@@ -32,11 +32,11 @@ namespace Abasto.Negocio.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Post(IngPublicacion obj)
+        public async Task<IActionResult> Post(ingPublicacion obj)
         {
             obj.MapToObject();
             await _ingPublicacionRepository.Add(obj);
-            return Ok(obj.PubId);
+            return Ok(obj.pubId);
         }
     }
 }

@@ -17,20 +17,20 @@ namespace Abasto.Negocio.Infrastructure.Repositories
         {
             this._context = context;
         }
-        public async Task<IEnumerable<IngPublicacion>> ToListAsync()
+        public async Task<IEnumerable<ingPublicacion>> ToListAsync()
         {
-            var lista = await this._context.IngPublicacion.ToListAsync();
+            var lista = await this._context.ingPublicacion.ToListAsync();
             return lista;
         }
 
-        public async Task<IngPublicacion> FirstOrDefaultAsync(long id)
+        public async Task<ingPublicacion> FirstOrDefaultAsync(long id)
         {
-            var obj = await this._context.IngPublicacion.Where(x=>x.PubId==id).FirstOrDefaultAsync();
+            var obj = await this._context.ingPublicacion.Where(x=>x.pubId==id).FirstOrDefaultAsync();
             return obj;
         }
-        public async Task Add(IngPublicacion obj)
+        public async Task Add(ingPublicacion obj)
         {
-            this._context.IngPublicacion.Add(obj);
+            this._context.ingPublicacion.Add(obj);
             await this._context.SaveChangesAsync();
         }
     }

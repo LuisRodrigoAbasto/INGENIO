@@ -7,25 +7,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Abasto.Negocio.Core.Entities
 {
-    [Table("IngComentario")]
-    public partial class IngComentario
+    [Table("ingComentario")]
+    public partial class ingComentario
     {
         [Key]
-        public long ComId { get; set; }
-        public long PubId { get; set; }
-        public long UsuId { get; set; }
+        public long comId { get; set; }
+        public long pubId { get; set; }
+        public long usrId { get; set; }
         
         [Required, StringLength(500), Column(TypeName = "varchar")]
-        public string ComDescripcion { get; set; }
+        public string comDescripcion { get; set; }
         
         [Column(TypeName = "datetime")]
-        public DateTime ComFecha { get; set; }
-        public bool ComActivo { get; set; }
+        public DateTime comFecha { get; set; }
+        public bool comActivo { get; set; }
 
-        [ForeignKey("UsuId")]
-        public virtual IngUsuario Usu { get; set; }
+        [ForeignKey("usrId")]
+        public virtual ingUsuario ingUsuario { get; set; }
 
-        [ForeignKey("PubId")]
-        public virtual IngPublicacion Pub { get; set; }
+        [ForeignKey("pubId")]
+        public virtual ingPublicacion ingPublicacion { get; set; }
     }
 }

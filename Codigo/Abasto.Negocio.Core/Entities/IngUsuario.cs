@@ -7,32 +7,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Abasto.Negocio.Core.Entities
 {
-    [Table("IngUsuario")]
-    public partial class IngUsuario
+    [Table("ingUsuario")]
+    public partial class ingUsuario
     {
-        public IngUsuario()
+        public ingUsuario()
         {
-            IngComentario = new HashSet<IngComentario>();
-            IngPublicacion = new HashSet<IngPublicacion>();
+            ingComentario = new HashSet<ingComentario>();
+            ingPublicacion = new HashSet<ingPublicacion>();
         }
         [Key]
-        public long UsuId { get; set; }
+        public long usrId { get; set; }
         
         [Required,StringLength(100),Column(TypeName ="varchar")]
-        public string UsuNombre { get; set; }
+        public string usrNombre { get; set; }
         
         [Required, StringLength(100), Column(TypeName = "varchar")]
-        public string UsuEmail { get; set; }
+        public string usrEmail { get; set; }
         
         [Column(TypeName ="date")]
-        public DateTime UsuFechaNacimiento { get; set; }
+        public DateTime usrFechaNacimiento { get; set; }
         
         [StringLength(10), Column(TypeName = "varchar")]
-        public string UsuTelefono { get; set; }
+        public string usrTelefono { get; set; }
         
-        public bool UsuActivo { get; set; }
+        public bool usrActivo { get; set; }
 
-        public virtual ICollection<IngComentario> IngComentario { get; set; }
-        public virtual ICollection<IngPublicacion> IngPublicacion { get; set; }
+        public virtual ICollection<ingComentario> ingComentario { get; set; }
+        public virtual ICollection<ingPublicacion> ingPublicacion { get; set; }
     }
 }
