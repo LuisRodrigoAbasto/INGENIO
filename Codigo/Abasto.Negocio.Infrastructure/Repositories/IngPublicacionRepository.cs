@@ -33,5 +33,16 @@ namespace Abasto.Negocio.Infrastructure.Repositories
             this._context.ingPublicacion.Add(obj);
             await this._context.SaveChangesAsync();
         }
+        public async Task Update(ingPublicacion obj)
+        {
+            this._context.ingPublicacion.Update(obj);
+            await this._context.SaveChangesAsync();
+        }
+        public async Task Delete(long id)
+        {
+            var obj = await FirstOrDefaultAsync(id);
+            this._context.ingPublicacion.Remove(obj);
+            await this._context.SaveChangesAsync();
+        }
     }
 }

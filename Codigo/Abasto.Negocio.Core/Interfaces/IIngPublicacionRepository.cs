@@ -12,5 +12,7 @@ namespace Abasto.Negocio.Core.Interfaces
         Task<IEnumerable<ingPublicacion>> ToListAsync();
         Task<ingPublicacion> FirstOrDefaultAsync(long id);
         Task Add(ingPublicacion obj);
+        Task Update(ingPublicacion obj);
+        Task Delete(long id);
     }
 }
