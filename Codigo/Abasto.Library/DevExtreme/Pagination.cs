@@ -19,35 +19,35 @@ namespace Abasto.Library.DevExtreme
     {
         public static async Task<IPaginateResult<T>> PaginateAsync<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            return await source.Paginate(filter: filter, async: true, options: options);
+            return await PaginateTask.Paginate(source: source, filter: filter, async: true, options: options);
         }
         public static IPaginateResult<T> Paginate<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            return source.Paginate(filter: filter, async: false, options: options).GetAwaiter().GetResult();
+            return PaginateTask.Paginate(source: source, filter: filter, async: false, options: options).GetAwaiter().GetResult();
         }
         public static async Task<IPaginateResult<T>> PaginateAsync<T>(this IQueryable<T> source, Action<QueryFilter> options) where T : class
         {
-            return await source.Paginate(filter: null, async: true, options: options);
+            return await PaginateTask.Paginate(source: source, filter: null, async: true, options: options);
         }
         public static IPaginateResult<T> Paginate<T>(this IQueryable<T> source, Action<QueryFilter> options) where T : class
         {
-            return source.Paginate(filter: null, async: false, options: options).GetAwaiter().GetResult();
+            return PaginateTask.Paginate(source: source, filter: null, async: false, options: options).GetAwaiter().GetResult();
         }
         public static async Task<IPaginateResult<T>> PaginateAsync<T>(this IQueryable<T> source, string filter) where T : class
         {
-            return await source.Paginate(filter: filter, async: true, options: null);
+            return await PaginateTask.Paginate(source: source, filter: filter, async: true, options: null);
         }
         public static IPaginateResult<T> Paginate<T>(this IQueryable<T> source, string filter) where T : class
         {
-            return source.Paginate(filter: filter, async: false, options: null).GetAwaiter().GetResult();
+            return PaginateTask.Paginate(source: source, filter: filter, async: false, options: null).GetAwaiter().GetResult();
         }
         public static async Task<IPaginateResult<T>> PaginateAsync<T>(this IQueryable<T> source) where T : class
         {
-            return await source.Paginate(filter: null, async: true, options: null);
+            return await PaginateTask.Paginate(source: source, filter: null, async: true, options: null);
         }
         public static IPaginateResult<T> Paginate<T>(this IQueryable<T> source) where T : class
         {
-            return source.Paginate(filter: null, async: false, options: null).GetAwaiter().GetResult();
+            return PaginateTask.Paginate(source: source, filter: null, async: false, options: null).GetAwaiter().GetResult();
         }        
     }
 

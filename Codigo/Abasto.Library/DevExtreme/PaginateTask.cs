@@ -18,7 +18,7 @@ namespace Abasto.Library.DevExtreme
 {
     public static class PaginateTask
     {
-        public static async Task<IPaginateResult<T>> PaginateExp<T>(this IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
+        public static async Task<IPaginateResult<T>> Paginate<T>(this IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
         {
             QueryFilter queryFilter = new QueryFilter();
             options?.Invoke(queryFilter);
@@ -26,7 +26,6 @@ namespace Abasto.Library.DevExtreme
             FilterClient filterClient = new FilterClient();
             IQueryable query = source.AsQueryable();
             PropertyDescriptorCollection property = TypeDescriptor.GetProperties(typeof(T));
-            Task.FromResult();
             if (!string.IsNullOrEmpty(filter))
             {
                 filterClient = JsonConvert.DeserializeObject<FilterClient>(filter);
