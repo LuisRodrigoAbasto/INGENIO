@@ -1,23 +1,23 @@
-﻿using Abasto.Library.Config;
+﻿using Abasto.Library.Excel.Config;
+using Abasto.Library.General;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace Abasto.Library.Excel
 {
     public static partial class Excel
     {
-        public static DataTable ReadSpreadSheet<T>(this DataTable dataTable, Action<ExcelConfig> options) where T : class
+        public static DataTable ReadSpreadSheet(this DataTable dataTable, string file, string nro = "nro", string validar = "mensaje")
         {
             DataTable dt = dataTable != null ? dataTable : new DataTable("Excel");
-            ExcelConfig excelConfig = new ExcelConfig();
-            options?.Invoke(excelConfig);
-            if (!string.IsNullOrEmpty(excelConfig.mensaje) && !dt.Columns.Contains(excelConfig.mensaje)) dt.Columns.Add(excelConfig.mensaje, typeof(string));
-            if (!string.IsNullOrEmpty(excelConfig.nro) && !dt.Columns.Contains(excelConfig.nro)) dt.Columns.Add(new DataColumn(excelConfig.nro, typeof(int)));
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(excelConfig.path, false))
+            if (!string.IsNullOrEmpty(validar) && !dt.Columns.Contains(validar)) dt.Columns.Add(validar, typeof(string));
+            if (!string.IsNullOrEmpty(nro) && !dt.Columns.Contains(nro)) dt.Columns.Add(new DataColumn(nro, typeof(long)));
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(file, false))
             {
                 string mensaje = string.Empty;
                 try
@@ -42,19 +42,19 @@ namespace Abasto.Library.Excel
                             {
                                 convirtio = int.TryParse(celda.Substring(v), out y);
                             }
-                            celda = celda.Replace(y.ToString(), "");
+                            celda = celda.ReplaceAll(y.ToString(), "");
                             if (firstRow)
                             {
                                 if (c.DataType != null && c.DataType == CellValues.SharedString)
                                 {
                                     text = workbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(Convert.ToInt32(c.InnerText)).InnerText.Trim();
-                                    string nombre = text.Replace(" ", "");
+                                    string nombre = text.ReplaceAll(" ", "");
                                     if (lista.Any(x => x.nombre == nombre))
                                     {
                                         mensaje = $"El Excel tiene La Columna {text} repetida.";
-                                        throw new AbastoException(mensaje);
+                                        throw new Exception(mensaje);
                                     }
-                                    else if (!columna.Contains(nombre)) dt.Columns.Add(new DataColumn() { ColumnName = nombre, DataType = typeof(string), Caption = text });
+                                    else if (!columna.Contains(nombre)) dt.Columns.Add(new DataColumn() { ColumnName = nombre, DataType = Type.GetType("System.String"), Caption = text });
                                     lista.Add(new ExcelTabla()
                                     {
                                         id = cantidad,
@@ -75,8 +75,13 @@ namespace Abasto.Library.Excel
                                     {
                                         try
                                         {
-                                            if (columna[obj.nombre].DataType == typeof(DateTime)) dr[obj.nombre] = DateTime.FromOADate(Double.Parse(text));
-                                            else dr[obj.nombre] = text;
+                                            var type = columna[obj.nombre].DataType;
+                                            object value = text;
+                                            if (type == typeof(DateTime)) value = DateTime.FromOADate(Double.Parse(text));
+                                            else if (type == typeof(decimal)) value = Convert.ToDecimal(text, CultureInfo.CreateSpecificCulture("en-US"));
+                                            //else dr[obj.nombre] = text;
+                                            dr[obj.nombre] = value;
+
                                         }
                                         catch
                                         {
@@ -92,8 +97,8 @@ namespace Abasto.Library.Excel
                         }
                         if (i > 0)
                         {
-                            if (!string.IsNullOrEmpty(excelConfig.nro)) dr[excelConfig.nro] = y;
-                            if (!string.IsNullOrEmpty(excelConfig.mensaje) && !string.IsNullOrEmpty(mensaje)) dr[excelConfig.mensaje] = $"{mensaje.Trim()} Fila Excel {y}";
+                            if (!string.IsNullOrEmpty(nro)) dr[nro] = y;
+                            if (!string.IsNullOrEmpty(validar) && !string.IsNullOrEmpty(mensaje)) dr[validar] = $"{mensaje.Trim()} Fila Excel {y}";
                             dt.Rows.Add(dr);
                         }
                         else
@@ -107,19 +112,14 @@ namespace Abasto.Library.Excel
                 {
                     doc.Close();
                     doc.Dispose();
-                    if (mensaje == ex.Message) throw new AbastoException(ex.Message, ex);
-                    else throw new AbastoException("Error al leer en el Documento", ex);
+                    if (mensaje == ex.Message) throw new Exception(ex.Message, ex);
+                    else throw new Exception("Error al leer en el Documento", ex);
                 }
                 doc.Close();
                 doc.Dispose();
             }
             return dt;
         }
-        private class ExcelTabla
-        {
-            public int id { get; set; }
-            public string celda { get; set; }
-            public string nombre { get; set; }
-        }
+
     }
 }

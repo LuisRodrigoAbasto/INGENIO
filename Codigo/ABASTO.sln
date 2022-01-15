@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Api", "Abasto.Negocio.Api\Abasto.Negocio.Api.csproj", "{E84BDDCD-81DB-4887-8C7E-96D6DE3B3219}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{20ACC302-0EE2-4CCA-ADE0-12DFA510675D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Core", "Abasto.Negocio.Core\Abasto.Negocio.Core.csproj", "{46ED7639-550E-4650-B4ED-33FD9B99B662}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Negocio.Infrastructure", "Abasto.Negocio.Infrastructure\Abasto.Negocio.Infrastructure.csproj", "{833B6702-25F7-48A1-89FA-71AD236782CB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{90BE2790-D36A-45A1-8B14-D951C922DEFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{171B35E4-27A8-415C-B7E3-5AD32008452D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E84BDDCD-81DB-4887-8C7E-96D6DE3B3219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E84BDDCD-81DB-4887-8C7E-96D6DE3B3219}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E84BDDCD-81DB-4887-8C7E-96D6DE3B3219}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E84BDDCD-81DB-4887-8C7E-96D6DE3B3219}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46ED7639-550E-4650-B4ED-33FD9B99B662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46ED7639-550E-4650-B4ED-33FD9B99B662}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46ED7639-550E-4650-B4ED-33FD9B99B662}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46ED7639-550E-4650-B4ED-33FD9B99B662}.Release|Any CPU.Build.0 = Release|Any CPU
-		{833B6702-25F7-48A1-89FA-71AD236782CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{833B6702-25F7-48A1-89FA-71AD236782CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{833B6702-25F7-48A1-89FA-71AD236782CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{833B6702-25F7-48A1-89FA-71AD236782CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90BE2790-D36A-45A1-8B14-D951C922DEFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90BE2790-D36A-45A1-8B14-D951C922DEFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90BE2790-D36A-45A1-8B14-D951C922DEFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90BE2790-D36A-45A1-8B14-D951C922DEFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20ACC302-0EE2-4CCA-ADE0-12DFA510675D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20ACC302-0EE2-4CCA-ADE0-12DFA510675D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20ACC302-0EE2-4CCA-ADE0-12DFA510675D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20ACC302-0EE2-4CCA-ADE0-12DFA510675D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{171B35E4-27A8-415C-B7E3-5AD32008452D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171B35E4-27A8-415C-B7E3-5AD32008452D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171B35E4-27A8-415C-B7E3-5AD32008452D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171B35E4-27A8-415C-B7E3-5AD32008452D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

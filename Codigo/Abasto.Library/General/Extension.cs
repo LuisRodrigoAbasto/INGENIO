@@ -37,7 +37,7 @@ namespace Abasto.Library.General
         }
 
         //Pasara solo los datos, colocara null a las clase de inyeccion
-        public static T MapToObject<T>(this T value) where T:class
+        public static T MapToObject<T>(this T value) where T : class
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             foreach (PropertyDescriptor prop in properties)
@@ -101,6 +101,6 @@ namespace Abasto.Library.General
                 table.Rows.Add(row);
             }
             return table;
-        }     
+        }
     }
 }

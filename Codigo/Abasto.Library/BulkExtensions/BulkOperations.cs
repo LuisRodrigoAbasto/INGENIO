@@ -1,4 +1,4 @@
-﻿using Abasto.Library.Config;
+﻿using Abasto.Library.BulkExtensions.Config;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +7,6 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Abasto.Library.BulkExtensions
