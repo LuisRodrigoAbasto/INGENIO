@@ -49,11 +49,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Abasto.Library\Abasto.Library.csproj">
-      <Project>{18fb628d-29b5-465d-9764-513ea0d17b17}</Project>
-      <Name>Abasto.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
