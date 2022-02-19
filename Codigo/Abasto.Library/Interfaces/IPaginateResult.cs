@@ -15,4 +15,11 @@ namespace Abasto.Library.Interfaces
         public int? groupCount { get; set; }
         public List<object> summary { get; set; }
     }
+    public interface IPaginateResult
+    {
+        public List<object> data { get; set; }
+        public int? totalCount { get; set; }
+        public int? groupCount { get; set; }
+        public List<object> summary { get; set; }
+    }
 }

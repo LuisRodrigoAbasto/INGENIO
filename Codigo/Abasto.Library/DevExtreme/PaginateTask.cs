@@ -18,7 +18,7 @@ namespace Abasto.Library.DevExtreme
 {
     public static class PaginateTask
     {
-        public static async Task<IPaginateResult<T>> Paginate<T>(this IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
+        public static async Task<IPaginateResult<T>> Paginate<T>(IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
         {
             QueryFilter queryFilter = new QueryFilter();
             options?.Invoke(queryFilter);
@@ -40,7 +40,7 @@ namespace Abasto.Library.DevExtreme
             if (async) return await query.PaginateResult<T>(filterClient, queryFilter, property, async);
             return query.PaginateResult<T>(filterClient, queryFilter, property, async).GetAwaiter().GetResult();
         }
-        private static async Task<IPaginateResult<T>> PaginateResult<T>(this IQueryable source, FilterClient filterClient, QueryFilter queryFilter, PropertyDescriptorCollection property, bool async)
+        private static async Task<PaginateResult<T>> PaginateResult<T>(this IQueryable source, FilterClient filterClient, QueryFilter queryFilter, PropertyDescriptorCollection property, bool async)
         {
             PaginateResult<T> paginateResult = new PaginateResult<T>();
             paginateResult.totalCount = async ? await source.QueryCountAsync(filterClient, async) : source.QueryCountAsync(filterClient, async).GetAwaiter().GetResult();
