@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{FCC50CA4-AB31-4087-A4B3-35D838D74C66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{56F988AF-73C6-456A-B74E-0E764BEA4D4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FCC50CA4-AB31-4087-A4B3-35D838D74C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCC50CA4-AB31-4087-A4B3-35D838D74C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCC50CA4-AB31-4087-A4B3-35D838D74C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCC50CA4-AB31-4087-A4B3-35D838D74C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F988AF-73C6-456A-B74E-0E764BEA4D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F988AF-73C6-456A-B74E-0E764BEA4D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F988AF-73C6-456A-B74E-0E764BEA4D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F988AF-73C6-456A-B74E-0E764BEA4D4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
