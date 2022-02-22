@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -16,27 +17,28 @@ using System.Threading.Tasks;
 
 namespace Abasto.Library.DevExtreme
 {
-    public class Paginate:IPaginate
+    public class Paginate<T>:IPaginate<T>
     {
-        private readonly IQueryable _source;
-        private string _filter;
-        private Action<QueryFilter> _options;
-        public Paginate(IQueryable source, string filter, Action<QueryFilter> options)
-        {
-            _source = source;
-            _filter = filter;
-            _options = options;
-        }
+        //private readonly IQueryable _source;
+        //private string _filter;
+        //private Action<QueryFilter> _options;
+        //public Paginate(IQueryable source, string filter, Action<QueryFilter> options)
+        //{
+        //    _source = source;
+        //    _filter = filter;
+        //    _options = options;
+        //}
+        public Paginate() { }
 
-    public async Task<IPaginateResult<T>> PaginateResultAsync<T>() where T : class
+    public async Task<IPaginateResult<T>> PaginateResultAsync<T>(IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            return await PaginateRead<T>(_source, _filter, false, _options);
+            return await PaginateRead<T>(source, filter, false, options);
         }
-        public IPaginateResult<T> PaginateResult<T>() where T : class
+        public IPaginateResult<T> PaginateResult<T>(IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            return PaginateRead<T>(_source, _filter, false, _options).GetAwaiter().GetResult();
+            return PaginateRead<T>(source, filter, false, options).GetAwaiter().GetResult();
         }
-        private async Task<IPaginateResult<T>> PaginateRead<T>(IQueryable source, string filter, bool async, Action<QueryFilter> options) where T : class
+        private async Task<IPaginateResult<T>> PaginateRead<T>(IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
         {
             QueryFilter queryFilter = new QueryFilter();
             options?.Invoke(queryFilter);
@@ -60,7 +62,7 @@ namespace Abasto.Library.DevExtreme
             if (async) return await PaginateReader<T>(query,filterClient, queryFilter, property, async);
             return PaginateReader<T>(query,filterClient, queryFilter, property, async).GetAwaiter().GetResult();
         }
-        private async Task<PaginateResult<T>> PaginateReader<T>(IQueryable source, FilterClient filterClient, QueryFilter queryFilter, PropertyDescriptorCollection property, bool async)
+        private async Task<IPaginateResult<T>> PaginateReader<T>(IQueryable source, FilterClient filterClient, QueryFilter queryFilter, PropertyDescriptorCollection property, bool async)
         {
             PaginateResult<T> paginateResult = new PaginateResult<T>();
             var QueryCount=QueryCountAsync(source, filterClient, async);

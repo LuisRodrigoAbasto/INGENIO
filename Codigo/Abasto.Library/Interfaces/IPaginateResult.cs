@@ -9,17 +9,17 @@ namespace Abasto.Library.Interfaces
 {
     public interface IPaginateResult<T>
     {
-        public List<T> data { get; set; }
-        public List<object> groupData { get; set; }
-        public int? totalCount { get; set; }
-        public int? groupCount { get; set; }
-        public List<object> summary { get; set; }
+        List<T> data { get; set; }
+        List<object> groupData { get; set; }
+        int? totalCount { get; set; }
+        int? groupCount { get; set; }
+        List<object> summary { get; set; }
     }
     public interface IPaginateResult
     {
-        public List<object> data { get; set; }
-        public int? totalCount { get; set; }
-        public int? groupCount { get; set; }
-        public List<object> summary { get; set; }
+        List<object> data { get; set; }
+        int? totalCount { get; set; }
+        int? groupCount { get; set; }
+        List<object> summary { get; set; }
     }
 }

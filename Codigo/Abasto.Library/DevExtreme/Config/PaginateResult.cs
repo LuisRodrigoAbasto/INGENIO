@@ -10,13 +10,13 @@ namespace Abasto.Library.DevExtreme.Config
         public List<object> groupData { get; set; }
         public int? totalCount { get; set; }
         public int? groupCount { get; set; }
-        public List<object>? summary { get; set; }
+        public List<object> summary { get; set; }
     }
     public class PaginateGroup
     {
         public object key { get; set; }
         public List<object> items { get; set; }
-        public object? count { get; set; }
+        public object count { get; set; }
         public List<object> summary { get; set; }
     }
 }
