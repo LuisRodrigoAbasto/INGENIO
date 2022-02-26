@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
-// asociada con un ensamblado.
-[assembly: AssemblyTitle("Abasto.Library")]
+// asociada a un ensamblado.
+[assembly: AssemblyTitle("Prueba")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Abasto.Library")]
+[assembly: AssemblyProduct("Prueba")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-[assembly: Guid("af3ba50d-588d-4182-97ce-a34a1ad4159c")]
+[assembly: Guid("ebce3d31-4ece-452c-a674-b0c3e3afd97b")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //

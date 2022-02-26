@@ -514,10 +514,5 @@ namespace Abasto.Library.DevExtreme
             param.Add(valor);
             return $"{columna}{operador} ";
         }
-
-        public IDbAsyncEnumerator GetAsyncEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

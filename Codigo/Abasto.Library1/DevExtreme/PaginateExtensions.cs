@@ -51,11 +51,6 @@ namespace Abasto.Library.DevExtreme
         {
             var page = new Paginate<T>();
             IPaginate<T> paginate = page as IPaginate<T>;
-            IPaginate<T> paginate1 = source as IPaginate<T>;
-            if (paginate1 != null)
-            {
-                var ok = paginate1;
-            }
             if (paginate != null) return paginate.PaginateResult(source, filter, options);
             throw new Exception("<" + typeof(T)?.ToString() + ">");
         }

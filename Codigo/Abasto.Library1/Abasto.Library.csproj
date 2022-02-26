@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AF3BA50D-588D-4182-97CE-A34A1AD4159C}</ProjectGuid>
+    <ProjectGuid>{4876E370-5B13-4AFF-8CFE-3B4930DF1AEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Abasto.Library</RootNamespace>
