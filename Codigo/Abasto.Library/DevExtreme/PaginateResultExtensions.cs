@@ -1,6 +1,7 @@
 ﻿using Abasto.Library.DevExtreme.Config;
 using Abasto.Library.Interfaces;
 using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,21 +43,16 @@ namespace Abasto.Library.DevExtreme
         }
         private static Task<IPaginateResult<T>> PageResultAsync<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
        {
-            var page = new Paginate<T>();
-            IPaginate<T> paginate = page as IPaginate<T>;
-            if(paginate!=null)return paginate.PaginateResultAsync(source,filter,options);
+            IPaginateQuery<T> paginate = new PaginateQuery<T>(source,filter,options);
+            IPaginate<T> result = paginate as IPaginate<T>;
+            if (result!=null)return result.PaginateResultAsync<T>();
             throw new Exception("<" + typeof(T)?.ToString() + ">");
         }
         private static IPaginateResult<T> PageResult<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            var page = new Paginate<T>();
-            IPaginate<T> paginate = page as IPaginate<T>;
-            IPaginate<T> paginate1 = source as IPaginate<T>;
-            if (paginate1 != null)
-            {
-                var ok = paginate1;
-            }
-            if (paginate != null) return paginate.PaginateResult(source, filter, options);
+            IPaginateQuery<T> paginate = new PaginateQuery<T>(source, filter, options);
+            IPaginate<T> result = paginate as IPaginate<T>;
+            if (result != null) return result.PaginateResult<T>();
             throw new Exception("<" + typeof(T)?.ToString() + ">");
         }
 

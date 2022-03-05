@@ -69,7 +69,7 @@
     <Compile Include="DevExtreme\Config\QueryFilter.cs" />
     <Compile Include="DevExtreme\Core\Pagination.cs" />
     <Compile Include="DevExtreme\Paginate.cs" />
-    <Compile Include="DevExtreme\PaginateExtensions.cs" />
+    <Compile Include="DevExtreme\PaginateResultExtensions.cs" />
     <Compile Include="Excel\Config\ExcelConfig.cs" />
     <Compile Include="Excel\Excel.cs" />
     <Compile Include="General\Extension.cs" />

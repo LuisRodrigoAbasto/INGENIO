@@ -6,50 +6,52 @@ using Abasto.Library.Property.Config;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Abasto.Library.DevExtreme
 {
-    public class Paginate<T>:IPaginate<T>
+    public class Paginate<T> : IPaginate<T>
     {
-        //private readonly IQueryable _source;
-        //private string _filter;
-        //private Action<QueryFilter> _options;
-        //public Paginate(IQueryable source, string filter, Action<QueryFilter> options)
-        //{
-        //    _source = source;
-        //    _filter = filter;
-        //    _options = options;
-        //}
-        public Paginate() { }
+        private IQueryable<T> _source;
+        private string _filter;
+        private Action<QueryFilter> _options;
 
-    public async Task<IPaginateResult<T>> PaginateResultAsync<T>(IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
+        public Paginate(IQueryable<T> source, string filter, Action<QueryFilter> options)
         {
-            return await PaginateRead<T>(source, filter, false, options);
+            this._source = source;
+            this._filter = filter;
+            this._options = options;
         }
-        public IPaginateResult<T> PaginateResult<T>(IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
+
+        public async Task<IPaginateResult<T>> PaginateResultAsync<T>()
         {
-            return PaginateRead<T>(source, filter, false, options).GetAwaiter().GetResult();
+            return await PaginateRead<T>(false);
         }
-        private async Task<IPaginateResult<T>> PaginateRead<T>(IQueryable<T> source, string filter, bool async, Action<QueryFilter> options) where T : class
+        public IPaginateResult<T> PaginateResult<T>()
+        {
+            return PaginateRead<T>(false).GetAwaiter().GetResult();
+        }
+        private async Task<IPaginateResult<T>> PaginateRead<T>(bool async)
         {
             QueryFilter queryFilter = new QueryFilter();
-            options?.Invoke(queryFilter);
+            _options?.Invoke(queryFilter);
 
             FilterClient filterClient = new FilterClient();
-            IQueryable query = source.AsQueryable();
+            IQueryable query = _source.AsQueryable();
             PropertyDescriptorCollection property = TypeDescriptor.GetProperties(typeof(T));
-            if (!string.IsNullOrEmpty(filter))
+            if (!string.IsNullOrEmpty(_filter))
             {
 #pragma warning disable CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
-                filterClient = JsonConvert.DeserializeObject<FilterClient>(filter);
+                filterClient = JsonConvert.DeserializeObject<FilterClient>(_filter);
 #pragma warning restore CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
                 query = QueryWhere(query,filterClient, property);
                 if (filterClient.isLoadingAll == true)
@@ -515,9 +517,5 @@ namespace Abasto.Library.DevExtreme
             return $"{columna}{operador} ";
         }
 
-        public IDbAsyncEnumerator GetAsyncEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
