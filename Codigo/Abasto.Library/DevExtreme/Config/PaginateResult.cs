@@ -1,10 +1,9 @@
 ﻿using Abasto.Library.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Abasto.Library.DevExtreme.Config
 {
-    public class PaginateResult:IPaginateResult
+    public class PaginateResult : IPaginateResult
     {
         public PaginateResult() { }
         public List<object> data { get; set; }
@@ -12,7 +11,7 @@ namespace Abasto.Library.DevExtreme.Config
         public int? groupCount { get; set; }
         public List<object> summary { get; set; }
     }
-    public class PaginateResult<T> :PaginateResult,IPaginateResult<T>
+    public class PaginateResult<T> : PaginateResult, IPaginateResult<T>
     {
         public PaginateResult() { }
         public new List<T> data { get; set; }
