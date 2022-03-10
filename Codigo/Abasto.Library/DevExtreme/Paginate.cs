@@ -6,24 +6,20 @@ using Abasto.Library.Property.Config;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Abasto.Library.DevExtreme
 {
     public class Paginate<T> : IPaginate<T>
     {
-        private IQueryable<T> _source;
-        private string _filter;
-        private Action<QueryFilter> _options;
+        private readonly IQueryable<T> _source;
+        private readonly string _filter;
+        private readonly Action<QueryFilter> _options;
 
         public Paginate(IQueryable<T> source, string filter, Action<QueryFilter> options)
         {
@@ -34,13 +30,17 @@ namespace Abasto.Library.DevExtreme
 
         public async Task<IPaginateResult<T>> PaginateResultAsync<T>()
         {
-            return await PaginateRead<T>(false);
+            return await PaginateRead<T>(true);
         }
+#pragma warning disable CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
         public IPaginateResult<T> PaginateResult<T>()
+#pragma warning restore CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
         {
             return PaginateRead<T>(false).GetAwaiter().GetResult();
         }
+#pragma warning disable CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
         private async Task<IPaginateResult<T>> PaginateRead<T>(bool async)
+#pragma warning restore CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
         {
             QueryFilter queryFilter = new QueryFilter();
             _options?.Invoke(queryFilter);
