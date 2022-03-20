@@ -10,15 +10,26 @@ namespace Prueba
     {
         static async Task Main(string[] args)
         {
+            Console.WriteLine("Inicio");
             using (Context cn = new Context())
             {
-                var result = cn.gavAnimal.Take(100).OrderByDescending(x => x.aniId).AsQueryable();
-                var lista = await result.PaginateResultAsync();
-                var ok = lista.data;
-                var result2 = cn.gavAnimal.Take(100).OrderByDescending(x => x.aniId).PaginateResult();
-                var obj = result;
-                Console.WriteLine(JsonConvert.SerializeObject(lista));
+                try
+                {
+                    long result = cn.gavAnimal.LongCount();
+                    var result4 = cn.gavAnimal.PaginateResult();
+
+                    Console.WriteLine($"Cantidad de Animales {result}");
+                    //Console.WriteLine(JsonConvert.SerializeObject(result));
+                    int result2 = cn.gavAnimal.GroupBy(x => x.catId).Count();
+                    //Console.WriteLine(JsonConvert.SerializeObject(result2));
+                    Console.WriteLine("Cantidad de Categoria en Animales=>" + result2);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Cantidad de Categoria en Animales=>" + ex.Message);
+                }
             }
+            Console.WriteLine("Fin");
         }
     }
 }

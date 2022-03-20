@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{AF3BA50D-588D-4182-97CE-A34A1AD4159C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prueba", "Prueba\Prueba.csproj", "{EBCE3D31-4ECE-452C-A674-B0C3E3AFD97B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abasto.Library", "Abasto.Library\Abasto.Library.csproj", "{AF3BA50D-588D-4182-97CE-A34A1AD4159C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBCE3D31-4ECE-452C-A674-B0C3E3AFD97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBCE3D31-4ECE-452C-A674-B0C3E3AFD97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCE3D31-4ECE-452C-A674-B0C3E3AFD97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBCE3D31-4ECE-452C-A674-B0C3E3AFD97B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF3BA50D-588D-4182-97CE-A34A1AD4159C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
