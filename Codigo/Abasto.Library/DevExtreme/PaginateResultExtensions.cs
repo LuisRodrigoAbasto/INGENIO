@@ -42,15 +42,15 @@ namespace Abasto.Library.DevExtreme
         }
         private static Task<IPaginateResult<T>> PageResultAsync<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            IPaginateQuery<T> paginate = new PaginateQuery<T>(source, filter, options);
-            IPaginate<T> result = paginate as IPaginate<T>;
+            IPaginateQuery<T> paginate = new PageResultProcess<T>(source, filter, options);
+            IPaginateResultProcess<T> result = paginate as IPaginateResultProcess<T>;
             if (result != null) return result.PaginateResultAsync<T>();
             throw new Exception("<" + typeof(T)?.ToString() + ">");
         }
         private static IPaginateResult<T> PageResult<T>(this IQueryable<T> source, string filter, Action<QueryFilter> options) where T : class
         {
-            IPaginateQuery<T> paginate = new PaginateQuery<T>(source, filter, options);
-            IPaginate<T> result = paginate as IPaginate<T>;
+            IPaginateQuery<T> paginate = new PageResultProcess<T>(source, filter, options);
+            IPaginateResultProcess<T> result = paginate as IPaginateResultProcess<T>;
             if (result != null) return result.PaginateResult<T>();
             throw new Exception("<" + typeof(T)?.ToString() + ">");
         }

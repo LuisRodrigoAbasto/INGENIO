@@ -15,92 +15,78 @@ using System.Threading.Tasks;
 
 namespace Abasto.Library.DevExtreme
 {
-    public class Paginate<T> : IPaginate<T>
+    public class PaginateQueryProcess:IPaginateQueryProcess
     {
-        private readonly IQueryable<T> _source;
+        private readonly IQueryable _source;
         private readonly string _filter;
         private readonly Action<QueryFilter> _options;
-        private int? _totalCount=null;
-
-        public Paginate(IQueryable<T> source, string filter, Action<QueryFilter> options)
+        public bool isGroup = false;
+        public PaginateQueryProcess(IQueryable source, string filter, Action<QueryFilter> options)
         {
             this._source = source;
             this._filter = filter;
             this._options = options;
         }
-
-        public async Task<IPaginateResult<T>> PaginateResultAsync<T>()
+        public async Task<IPaginateQuery> PaginateResultAsync()
         {
-            return await PaginateRead<T>(true);
+            return await PaginateQueryResult(true);
         }
-#pragma warning disable CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
-        public IPaginateResult<T> PaginateResult<T>()
-#pragma warning restore CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
+        public IPaginateQuery PaginateResult()
         {
-            return PaginateRead<T>(false).GetAwaiter().GetResult();
+            return PaginateQueryResult(false).GetAwaiter().GetResult();
         }
-#pragma warning disable CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
-        private async Task<IPaginateResult<T>> PaginateRead<T>(bool async)
-#pragma warning restore CS0693 // El parámetro de tipo tiene el mismo nombre que el parámetro de tipo de un tipo externo
+        private async Task<IPaginateQuery> PaginateQueryResult(bool async)
         {
             QueryFilter queryFilter = new QueryFilter();
             _options?.Invoke(queryFilter);
 
             FilterClient filterClient = new FilterClient();
             IQueryable query = _source.AsQueryable();
-            PropertyDescriptorCollection property = TypeDescriptor.GetProperties(typeof(T));
+            PropertyDescriptorCollection property = TypeDescriptor.GetProperties(typeof(object));
             if (!string.IsNullOrEmpty(_filter))
             {
-#pragma warning disable CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
                 filterClient = JsonConvert.DeserializeObject<FilterClient>(_filter);
-#pragma warning restore CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
                 query = QueryWhere(query, filterClient, property);
                 if (filterClient.isLoadingAll == true)
                 {
-                    query = (async ? await ((IQueryable<T>)query).ToListAsync()
-                        : ((IQueryable<T>)query).ToList()).AsQueryable();
+                    query = (async ? await query.ToListAsync()
+                        : ((IQueryable<object>)query).ToList()).AsQueryable();
                     async = false; // desactivar async para que busque los datos estatico
                 }
             }
             var queryReader = PaginateQuery(query, filterClient, queryFilter, property, async);
             var paginateQuery = async ? await queryReader : queryReader.GetAwaiter().GetResult();
-            PaginateResult<T> result = new PaginateResult<T>()
-            {
-                groupCount = paginateQuery.groupCount,
-                summary = paginateQuery.summary,
-                totalCount = paginateQuery.totalCount,
-            };
-            if (filterClient.group != null) {
-                var data = async ? await ((IQueryable<object>)paginateQuery.data).ToListAsync() : ((IQueryable<object>)paginateQuery.data).ToList();
-                if (string.IsNullOrEmpty(filterClient.dataField)) result.groupData = ToListGroupBy<T>(data, filterClient, queryFilter);
-                else result.groupData = data;
-            }
-            else result.data =async? await((IQueryable<T>)paginateQuery.data).ToListAsync():((IQueryable<T>)paginateQuery.data).ToList();
-         
-            return result;
+            //PaginateResult<T> result = new PaginateResult<T>()
+            //{
+            //    groupCount = paginateQuery.groupCount,
+            //    summary = paginateQuery.summary,
+            //    totalCount = paginateQuery.totalCount,
+            //};
+            //if (filterClient.group != null)
+            //{
+            //    result.groupData = paginateQuery.data.ToDynamicList<object>();
+            //}
+            //else result.data = paginateQuery.data.ToDynamicList<T>();
+
+            return paginateQuery;
         }
         private async Task<IPaginateQuery> PaginateQuery(IQueryable source, FilterClient filterClient, QueryFilter queryFilter, PropertyDescriptorCollection property, bool async)
         {
+            PaginateQuery paginateQuery = new PaginateQuery();
             var QueryCount = QueryCountAsync(source, filterClient, async);
-            //paginateQuery.totalCount = async ? await QueryCount : QueryCount.GetAwaiter().GetResult();
-            var QuerySummary = QuerySummaryAsync(source, filterClient, async);
-            //paginateQuery.summary = async ? await QuerySummary : QuerySummary.GetAwaiter().GetResult();
+            paginateQuery.totalCount = async ? await QueryCount : QueryCount.GetAwaiter().GetResult();
+            var QuerySummary = QuerySummaryAsync(source, filterClient, paginateQuery.totalCount, async);
+            paginateQuery.summary = async ? await QuerySummary : QuerySummary.GetAwaiter().GetResult();
             source = QueryOrderBy(source, filterClient, queryFilter, property);
             IQueryable query = QueryGroupBy(source, filterClient, queryFilter, property);
             var QueryGroupCount = QueryGroupCountAsync(source, filterClient, async, property);
-            //paginateQuery.groupCount = async ? await QueryGroupCount : QueryGroupCount.GetAwaiter().GetResult();
+            paginateQuery.groupCount = async ? await QueryGroupCount : QueryGroupCount.GetAwaiter().GetResult();
             query = QuerySkipTake(query, filterClient);
+            var data = async ? await query.ToListAsync() : query.ToDynamicList<object>();
+            if (filterClient.group != null && string.IsNullOrEmpty(filterClient.dataField)) paginateQuery.data = ToListGroupBy(data, filterClient, queryFilter).AsQueryable();
+            else paginateQuery.data = data.AsQueryable();
 
-            await Task.WhenAll(QueryCount, QueryGroupCount);
-            PaginateQuery paginateQuery = new PaginateQuery()
-            {
-                data = query,
-                totalCount = await QueryCount,
-                groupCount = await QueryGroupCount,
-            };
-
-            await Task.WhenAll(QuerySummary);
-            paginateQuery.summary = await QuerySummary;
+            isGroup = filterClient.group != null;
             return paginateQuery;
         }
         private IQueryable QueryWhere(IQueryable query, FilterClient filterClient, PropertyDescriptorCollection property)
@@ -182,7 +168,7 @@ namespace Abasto.Library.DevExtreme
                 }
             }
         }
-        private async Task<List<object>> QuerySummaryAsync(IQueryable query, FilterClient filterClient, bool async)
+        private async Task<List<object>> QuerySummaryAsync(IQueryable query, FilterClient filterClient, int? totalCount, bool async)
         {
             if (filterClient.totalSummary == null) return null;
 
@@ -193,8 +179,6 @@ namespace Abasto.Library.DevExtreme
                 summaryType = x.summaryType,
                 value = (object)null
             }).ToList();
-            int? totalCount = _totalCount;
-            var existe = new List<(string, object)>();
             foreach (var item in summaryItem)
             {
                 object total = null;
@@ -207,10 +191,9 @@ namespace Abasto.Library.DevExtreme
                             if (totalCount != null) total = totalCount;
                             else
                             {
-                                var QueryCount = QueryCountAsync(query, filterClient, async);
-                                await Task.WhenAll(QueryCount);
-                                total = await QueryCount;
-                                totalCount = (int?)total;
+                                var queryCount = QueryCount(query, async);
+                                totalCount = async ? await queryCount : queryCount.GetAwaiter().GetResult();
+                                total = totalCount;
                             }
                         }
                         else if (!string.IsNullOrEmpty(item.selector) && !string.IsNullOrEmpty(item.summaryType))
@@ -222,8 +205,9 @@ namespace Abasto.Library.DevExtreme
                         }
                         else continue;
                     }
-                    catch(Exception ex) {
-                        total = 0; 
+                    catch
+                    {
+                        total = 0;
                     }
                 }
 
@@ -350,7 +334,7 @@ namespace Abasto.Library.DevExtreme
             IQueryable query = source.GroupBy(key, groupObject.ToArray()).Select($"new({consulta})").OrderBy(order);
             return query;
         }
-        private List<object> ToListGroupBy<T>(List<object> data, FilterClient filterClient, QueryFilter queryFilter)
+        private List<object> ToListGroupBy(List<object> data, FilterClient filterClient, QueryFilter queryFilter)
         {
             if (data == null) return null;
             var group = new List<object>();
@@ -379,13 +363,13 @@ namespace Abasto.Library.DevExtreme
                     else if (prop.Name == "items")
                     {
                         var items = new List<object>((IEnumerable<object>)valor);
-                        row.items = ToListGroupBy<T>(items, filterClient, queryFilter);
+                        row.items = ToListGroupBy(items, filterClient, queryFilter);
                     }
                     else if (prop.Name == "data")
                     {
                         if (!string.IsNullOrEmpty(queryFilter.orderBy))
                         {
-                            row.items = ((IQueryable<object>)new List<T>((IEnumerable<T>)valor)
+                            row.items = ((IQueryable<object>)new List<object>((IEnumerable<object>)valor)
                                 .AsQueryable().OrderBy(queryFilter.orderBy)).ToList();
                         }
                         else row.items = new List<object>((IEnumerable<object>)valor);
@@ -419,8 +403,8 @@ namespace Abasto.Library.DevExtreme
         private async Task<int?> QueryCountAsync(IQueryable query, FilterClient filterClient, bool async)
         {
             if (filterClient.requireTotalCount != true) return null;
-            _totalCount= async ? await QueryCount(query, async) : QueryCount(query, async).GetAwaiter().GetResult();
-            return _totalCount;
+            var totalCount = async ? await QueryCount(query, async) : QueryCount(query, async).GetAwaiter().GetResult();
+            return totalCount;
         }
         private async Task<int?> QueryGroupCountAsync(IQueryable query, FilterClient filterClient, bool async, PropertyDescriptorCollection property)
         {
@@ -429,7 +413,7 @@ namespace Abasto.Library.DevExtreme
         }
         private async Task<int> QueryCount(IQueryable query, bool async)
         {
-            return async ? await ((IQueryable<object>)query.AsQueryable()).CountAsync() : ((IQueryable<object>)query.AsQueryable()).Count();
+            return async ? await ((IQueryable<object>)query).CountAsync() : ((IQueryable<object>)query).Count();
         }
         private string ConsultaWhere(object[] data, PropertyDescriptorCollection property, ref List<object> param)
         {

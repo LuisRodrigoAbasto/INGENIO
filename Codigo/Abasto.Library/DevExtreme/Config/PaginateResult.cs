@@ -1,4 +1,6 @@
 ﻿using Abasto.Library.Interfaces;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +8,7 @@ namespace Abasto.Library.DevExtreme.Config
 {
     public class PaginateQuery:IPaginateQuery
     {
-        public PaginateQuery() { }
+        public PaginateQuery()        {        }
         public IQueryable data { get; set; }
         public int? totalCount { get; set; }
         public int? groupCount { get; set; }

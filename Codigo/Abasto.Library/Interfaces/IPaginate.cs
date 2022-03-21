@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace Abasto.Library.Interfaces
 {
-    public interface IPaginate<out T>
+    public interface IPaginateQueryProcess
     {
-        Task<IPaginateResult<T>> PaginateResultAsync<T>();
-        IPaginateResult<T> PaginateResult<T>();
+        Task<IPaginateQuery> PaginateResultAsync();
+        IPaginateQuery PaginateResult();
+    }
+    public interface IPaginateResultProcess<out T>
+    {
+        new Task<IPaginateResult<T>> PaginateResultAsync<T>();
+        new IPaginateResult<T> PaginateResult<T>();
     }
     public interface IPaginateQuery<out T>
     {
     }
-    public class PaginateQuery<T> : Paginate<T>, IPaginateQuery<T>
+    public class PageResultProcess<T> : PaginateResultProcess<T>, IPaginateQuery<T>
     {
-        public PaginateQuery(IQueryable<T> source, string filter, Action<QueryFilter> options) : base(source, filter, options)
+        public PageResultProcess(IQueryable<T> source, string filter, Action<QueryFilter> options) : base(source, filter, options)
         {
         }
     }
